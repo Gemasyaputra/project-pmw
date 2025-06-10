@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TemanAjar - Request Belajar</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TemanAjar - Request Belajar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #000080;
+            --primary-light: rgba(0, 0, 128, 0.1);
+            --secondary-color: #f97316;
+            --secondary-light: #ffedd5;
+            --text-dark: #1a365d;
+            --text-muted: #718096;
+            --border-color: #e2e8f0;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-muted) !important;
+        }
+
+        .nav-link.active {
+            color: var(--primary-color) !important;
+            font-weight: 600;
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+            font-weight: 500;
+            border-radius: 8px;
+            padding: 0.5rem 1.2rem;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+
+        /* Rest of your existing styles */
+        .section-title {
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+        .request-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+        .request-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .student-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .student-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+        }
+        .student-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+        .student-grade {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .subject-tag {
+            background: #e6fffa;
+            color: #00695c;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .request-details {
+            margin: 1rem 0;
+        }
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .detail-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .detail-value {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        .schedule-info {
+            color: #4a5568;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .btn-accept {
+            background: #38a169;
+            border: none;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+        .btn-accept:hover {
+            background: #2f855a;
+            color: white;
+        }
+        .btn-decline {
+            background: #e53e3e;
+            border: none;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .btn-decline:hover {
+            background: #c53030;
+            color: white;
+        }
+        .footer {
+            background: white;
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        .footer-brand {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .footer-copyright {
+            color: #a0aec0;
+            font-size: 0.85rem;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+        .social-icon {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+        .social-icon:hover {
+            color: var(--primary-color);
+        }
+        .status-badge {
+            background: #ffd89b;
+            color: #744210;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .urgent-badge {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="mentor_page.html">TemanAjar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="mentor_page.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="transaksi.html">Transaksi</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="request.html">Request Belajar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="feedback.html">Feedback</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                        <a class="btn btn-outline-primary" href="#">
+                            <i class="fas fa-sign-out-alt me-1"></i> Keluar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Header -->
+        <div class="mb-4">
+            <h2 class="section-title">Request Belajar</h2>
+            <p class="subtitle">Lihat permintaan belajar dari murid dan ajukan diri Anda sebagai tutor</p>
+        </div>
+
+        <!-- Request Cards -->
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="request-card">
+                    <div class="student-info">
+                        <div class="student-avatar">AN</div>
+                        <div>
+                            <div class="student-name">Andi Nugraha</div>
+                            <div class="student-grade">Informatika</div>
+                        </div>
+                        <div class="ms-auto">
+                            <span class="urgent-badge">Urgent</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="subject-tag">Matematika diskrit</span>
+                        <span class="subject-tag">data structure</span>
+                    </div>
+                    
+                    <div class="request-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Lokasi:</span>
+                            <span class="detail-value">Jakarta Selatan</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Budget:</span>
+                            <span class="detail-value">Rp 150.000/sesi</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Durasi:</span>
+                            <span class="detail-value">2 jam/sesi</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Frekuensi:</span>
+                            <span class="detail-value">2x seminggu</span>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-info">
+                        <i class="fas fa-clock text-muted me-2"></i>
+                        Jadwal fleksibel, preferensi sore hari (16:00-18:00)
+                    </div>
+                    
+                    <div class="d-flex">
+                        <button class="btn btn-accept">Terima Request</button>
+                        <button class="btn btn-decline">Tolak</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="request-card">
+                    <div class="student-info">
+                        <div class="student-avatar">SR</div>
+                        <div>
+                            <div class="student-name">Sari Ramadhani</div>
+                            <div class="student-grade">teknik sipil</div>
+                        </div>
+                        <div class="ms-auto">
+                            <span class="status-badge">Reguler</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="subject-tag">matematika teknik</span>
+                        <span class="subject-tag">perancangan bangunan dan struktur</span>
+                    </div>
+                    
+                    <div class="request-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Lokasi:</span>
+                            <span class="detail-value">Bandung</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Budget:</span>
+                            <span class="detail-value">Rp 100.000/sesi</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Durasi:</span>
+                            <span class="detail-value">1.5 jam/sesi</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Frekuensi:</span>
+                            <span class="detail-value">3x seminggu</span>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-info">
+                        <i class="fas fa-clock text-muted me-2"></i>
+                        Senin, Rabu, Jumat (19:00-20:30)
+                    </div>
+                    
+                    <div class="d-flex">
+                        <button class="btn btn-accept">Terima Request</button>
+                        <button class="btn btn-decline">Tolak</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="request-card">
+                    <div class="student-info">
+                        <div class="student-avatar">BP</div>
+                        <div>
+                            <div class="student-name">Budi Pratama</div>
+                            <div class="student-grade">eletronika</div>
+                        </div>
+                        <div class="ms-auto">
+                            <span class="urgent-badge">Urgent</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="subject-tag">Rangkaian Listrik DC</span>
+                        <span class="subject-tag">Bengkel Elektronik</span>
+                    </div>
+                    
+                    <div class="request-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Lokasi:</span>
+                            <span class="detail-value">Surabaya</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Budget:</span>
+                            <span class="detail-value">Rp 200.000/sesi</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Durasi:</span>
+                            <span class="detail-value">2.5 jam/sesi</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Frekuensi:</span>
+                            <span class="detail-value">4x seminggu</span>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-info">
+                        <i class="fas fa-clock text-muted me-2"></i>
+                        Persiapan UTBK, jadwal intensif mulai minggu depan
+                    </div>
+                    
+                    <div class="d-flex">
+                        <button class="btn btn-accept">Terima Request</button>
+                        <button class="btn btn-decline">Tolak</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="request-card">
+                    <div class="student-info">
+                        <div class="student-avatar">DA</div>
+                        <div>
+                            <div class="student-name">Dina Amelia</div>
+                            <div class="student-grade">bahasa inggris</div>
+                        </div>
+                        <div class="ms-auto">
+                            <span class="status-badge">Reguler</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="subject-tag">tenses</span>
+                        <span class="subject-tag">grammar</span>
+                    </div>
+                    
+                    <div class="request-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Lokasi:</span>
+                            <span class="detail-value">Yogyakarta</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Budget:</span>
+                            <span class="detail-value">Rp 120.000/sesi</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Durasi:</span>
+                            <span class="detail-value">2 jam/sesi</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Frekuensi:</span>
+                            <span class="detail-value">2x seminggu</span>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-info">
+                        <i class="fas fa-clock text-muted me-2"></i>
+                        Sabtu dan Minggu (14:00-16:00)
+                    </div>
+                    
+                    <div class="d-flex">
+                        <button class="btn btn-accept">Terima Request</button>
+                        <button class="btn btn-decline">Tolak</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="footer-brand">TemanAjar</div>
+                    <p class="footer-text mb-0">
+                        Temukan tutor terbaik untuk kebutuhan pendidikan Anda. Platform TemanAjarg paling top buat belajar, nugas, ujian, sampai persiapan SNBT!
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="social-icons mb-2">
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fas fa-phone"></i></a>
+                    </div>
+                    <div class="footer-copyright">
+                        © 2025 TemanAjar. Semua hak dilindungi.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Add click handlers for accept/decline buttons
+        document.querySelectorAll('.btn-accept').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Request diterima! Anda akan dihubungkan dengan murid.');
+            });
+        });
+
+        document.querySelectorAll('.btn-decline').forEach(button => {
+            button.addEventListener('click', function() {
+                if(confirm('Apakah Anda yakin ingin menolak request ini?')) {
+                    this.closest('.request-card').style.opacity = '0.5';
+                    alert('Request ditolak.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

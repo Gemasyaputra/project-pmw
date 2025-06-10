@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Tutor - TemanAjar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #000080;
+      --primary-light: rgba(0, 0, 128, 0.1);
+      --secondary-color: #f97316;
+      --secondary-light: #ffedd5;
+    }
+    
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: #495057;
+    }
+
+    .nav-link.active {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .card-profile {
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+    }
+
+    .card-profile:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .avatar-container {
+      position: relative;
+      height: 100%;
+      min-height: 240px;
+    }
+
+    .avatar {
+      background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      color: #334155;
+      border-radius: 1rem 0 0 1rem;
+    }
+
+    .avatar-edit {
+      position: relative;
+      cursor: pointer;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .avatar-edit-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 128, 0.5);
+      color: white;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .avatar-edit:hover .avatar-edit-overlay {
+      opacity: 1;
+    }
+
+    .status {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #e2e8f0;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .status.available {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+
+    .status.busy {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+
+    .badge-campus {
+      background-color: var(--secondary-light);
+      color: var(--secondary-color);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.5rem 0.75rem;
+    }
+
+    .text-primary {
+      color: var(--primary-color) !important;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color) !important;
+      border-color: var(--primary-color) !important;
+      font-weight: 500;
+    }
+
+    .btn-outline-primary {
+      color: var(--primary-color) !important;
+      border-color: var(--primary-color) !important;
+    }
+
+    .btn-outline-primary:hover {
+      background-color: var(--primary-color) !important;
+      color: white !important;
+    }
+
+    .subject-badge {
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      font-weight: 500;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .rating {
+      color: #f59e0b;
+    }
+
+    .section-title {
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .section-title:after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background-color: var(--primary-color);
+      margin-top: 0.5rem;
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: #495057;
+    }
+
+    .form-control, .form-select {
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ced4da;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(0, 0, 128, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .avatar {
+        border-radius: 1rem 1rem 0 0;
+      }
+      
+      .profile-actions {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">TemanAjar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="mentor_page.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="transaksi.html">Transaksi</a></li>
+          <li class="nav-item"><a class="nav-link" href="request.html">Request Belajar</a></li>
+          <li class="nav-item"><a class="nav-link" href="feedback.html">Feedback</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
+          <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+            <a class="btn btn-outline-primary" href="#">
+              <i class="fas fa-sign-out-alt me-1"></i> Keluar
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container my-5">
+    <h1 class="section-title">Dashboard Tutor</h1>
+    <h5 class="fw-semibold text-primary mb-4">Tampilan Profil Anda</h5>
+
+    <div class="d-flex justify-content-end mb-3 profile-actions">
+      <button class="btn btn-outline-primary btn-sm me-2">
+        <i class="fas fa-eye me-1"></i> Lihat Profil Lengkap
+      </button>
+      <button class="btn btn-primary btn-sm">
+        <i class="fas fa-exchange-alt me-1"></i> Transaksi
+      </button>
+    </div>
+
+    <div class="card card-profile mb-5">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <div class="avatar-container">
+            <div class="avatar">
+              GS
+              <span class="status busy">Sibuk</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 p-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
+            <h2 class="fw-bold mb-2 mb-md-0">Gema Syaputra</h2>
+            <h4 class="fw-bold text-primary mb-0">Rp20.000 <small class="fs-6 text-muted">/jam</small></h4>
+          </div>
+          
+          <p class="text-muted mb-2">
+            <i class="far fa-clock me-1"></i> Terakhir online 2 jam lalu
+          </p>
+          
+          <span class="badge badge-campus mb-3">
+            <i class="fas fa-university me-1"></i> Politeknik Negeri Padang (PNP)
+          </span>
+          
+          <div class="rating mb-3">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <span class="text-muted ms-2">(0 ulasan)</span>
+          </div>
+          
+          <p class="text-muted mb-3">
+            <i class="fas fa-quote-left me-1"></i> Tidak ada biografi tersedia
+          </p>
+          
+          <div class="d-flex flex-wrap">
+            <span class="badge subject-badge">snbt_pbm</span>
+            <span class="badge subject-badge">snbt_ppu</span>
+            <span class="badge subject-badge">matematika dasar</span>
+            <span class="badge subject-badge">+2 lainnya</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title mt-5">Kelola Profil</h2>
+    <h5 class="fw-semibold text-primary mb-4">Lengkapi data diri Anda</h5>
+
+    <div class="d-flex justify-content-end mb-3 profile-actions">
+      <button class="btn btn-outline-primary btn-sm me-2 slide-status">
+        <i class="fas fa-chevron-left me-1"></i> Tersedia
+      </button>
+      <button class="btn btn-primary btn-sm slide-status">
+        <i class="fas fa-chevron-right me-1"></i> Sibuk
+      </button>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body text-center">
+            <h6 class="fw-bold mb-3">Foto Profil</h6>
+            <div class="avatar-edit mb-3">
+              <img src="https://picsum.photos/200" class="img-fluid rounded-circle shadow-sm" width="200" height="200" alt="Foto Profil" loading="lazy">
+              <div class="avatar-edit-overlay rounded-circle d-flex flex-column align-items-center justify-content-center">
+                <i class="fas fa-camera text-white fs-4"></i>
+                <span class="text-white fw-semibold mt-2">Ubah Foto</span>
+              </div>
+              <input type="file" accept="image/*" class="d-none" id="avatarEdit">
+              <label for="avatarEdit" class="stretched-link"></label>
+            </div>
+            <p class="text-muted small">Format: JPG, PNG (max. 2MB)</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <form>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="nama" class="form-label">Nama Lengkap</label>
+                    <input type="text" class="form-control" id="nama" placeholder="Masukkan nama lengkap">
+                    <div class="form-text">Nama akan ditampilkan di profil Anda</div>
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="noHp" class="form-label">Nomor Telepon</label>
+                    <div class="input-group">
+                      <span class="input-group-text">+62</span>
+                      <input type="tel" class="form-control" id="noHp" placeholder="81234567890">
+                    </div>
+                    <div class="form-text">Digunakan untuk verifikasi</div>
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="institusi" class="form-label">Institusi</label>
+                    <select class="form-select" id="institusi">
+                      <option selected disabled>Pilih institusi</option>
+                      <option value="PNP">Politeknik Negeri Padang</option>
+                      <option value="UNAND">Universitas Andalas</option>
+                      <option value="UNP">Universitas Negeri Padang</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="prodi" class="form-label">Program Studi</label>
+                    <input type="text" class="form-control" id="prodi" placeholder="Contoh: Teknik Informatika">
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="mataKuliah" class="form-label">Mata Kuliah yang Diajar</label>
+                    <input type="text" class="form-control" id="mataKuliah" placeholder="Pisahkan dengan koma">
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="harga" class="form-label">Harga per Jam</label>
+                    <div class="input-group">
+                      <span class="input-group-text">Rp</span>
+                      <input type="number" class="form-control" id="harga" placeholder="20000" min="10000" step="5000">
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-12">
+                  <div class="mb-3">
+                    <label for="bio" class="form-label">Biografi</label>
+                    <textarea class="form-control" id="bio" rows="4" placeholder="Ceritakan tentang keahlian dan pengalaman mengajar Anda"></textarea>
+                    <div class="form-text">Maksimal 500 karakter</div>
+                  </div>
+                </div>
+                
+                <div class="col-12">
+                  <div class="mb-3">
+                    <label for="sertifikat" class="form-label">Unggah Sertifikat (opsional)</label>
+                    <input type="file" class="form-control" id="sertifikat">
+                    <div class="form-text">Format: PDF (max. 5MB)</div>
+                  </div>
+                </div>
+                
+                <div class="col-12">
+                  <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary me-2">
+                      <i class="fas fa-times me-1"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fas fa-save me-1"></i> Simpan Perubahan
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-light py-4 mt-5">
+    <div class="container text-center text-muted">
+      <p class="mb-0">© 2023 TemanAjar. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Simple script to show file name when selected
+    document.getElementById('sertifikat').addEventListener('change', function(e) {
+      const fileName = e.target.files[0]?.name || 'Tidak ada file dipilih';
+      const label = document.querySelector('label[for="sertifikat"]');
+      label.innerHTML = `Unggah Sertifikat: <span class="text-primary">${fileName}</span>`;
+    });
+  </script>
+</body>
+
+</html>
